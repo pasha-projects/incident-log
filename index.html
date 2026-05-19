@@ -136,22 +136,14 @@ button:hover { border-color: var(--accent); color: var(--accent); }
   <div id="log-list"><div class="empty">No entries yet.</div></div>
 </div>
 <script>
-let entries = [];
+let entries = JSON.parse(localStorage.getItem('incident_entries') || '[]');
 
 const now = new Date();
 document.getElementById('inc-date').value = now.toISOString().split('T')[0];
 document.getElementById('inc-time').value = now.toTimeString().slice(0,5);
 
-async function loadEntries() {
-  try {
-    const r = await window.storage.get('incident_entries');
-    entries = r ? JSON.parse(r.value) : [];
-  } catch(e) { entries = []; }
-  render();
-}
-
-async function save() {
-  try { await window.storage.set('incident_entries', JSON.stringify(entries)); } catch(e) {}
+function save() {
+  localStorage.setItem('incident_entries', JSON.stringify(entries));
 }
 
 function getMovement() {
@@ -236,7 +228,7 @@ function exportLog() {
   box.select();
 }
 
-loadEntries();
+render();
 </script>
 </body>
 </html>
