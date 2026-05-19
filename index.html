@@ -220,12 +220,11 @@ function exportLog() {
   wrap.id = 'csv-wrap';
   wrap.style.cssText = 'margin-top:1rem;';
   wrap.innerHTML = `
-    <div class="section-label" style="margin-bottom:8px;">CSV output</div>
-    <textarea id="csv-output" style="width:100%;min-height:140px;font-size:11px;background:var(--surface2);color:var(--text);border:0.5px solid var(--border2);border-radius:var(--radius);padding:10px;font-family:'Courier New',monospace;resize:vertical;" readonly></textarea>
-    <div style="display:flex;gap:10px;margin-top:8px;">
-      <button onclick="document.getElementById('csv-output').select()">Select All</button>
-      <button onclick="navigator.clipboard.writeText(document.getElementById('csv-output').value).then(()=>this.textContent='Copied!').catch(()=>this.textContent='Failed')">Copy</button>
-    </div>`;
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+      <div class="section-label" style="margin:0;">CSV output — tap to select all</div>
+      <button onclick="document.getElementById('csv-wrap').remove()" style="padding:2px 8px;font-size:13px;border-color:transparent;color:var(--muted);">✕</button>
+    </div>
+    <textarea id="csv-output" style="width:100%;min-height:140px;font-size:11px;background:var(--surface2);color:var(--text);border:0.5px solid var(--border2);border-radius:var(--radius);padding:10px;font-family:'Courier New',monospace;resize:vertical;" readonly onclick="this.select()"></textarea>`;
   document.querySelector('.btn-row').after(wrap);
   document.getElementById('csv-output').value = csv;
 }
