@@ -224,7 +224,7 @@ function exportLog() {
       <div class="section-label" style="margin:0;">CSV output — tap to select all</div>
       <button onclick="document.getElementById('csv-wrap').remove()" style="padding:2px 8px;font-size:13px;border-color:transparent;color:var(--muted);">✕</button>
     </div>
-    <textarea id="csv-output" style="width:100%;min-height:140px;font-size:11px;background:var(--surface2);color:var(--text);border:0.5px solid var(--border2);border-radius:var(--radius);padding:10px;font-family:'Courier New',monospace;resize:vertical;" readonly onclick="this.select()"></textarea>`;
+    <textarea id="csv-output" style="width:100%;min-height:140px;font-size:16px;background:var(--surface2);color:var(--text);border:0.5px solid var(--border2);border-radius:var(--radius);padding:10px;font-family:'Courier New',monospace;resize:vertical;" readonly onclick="this.select()"></textarea>`;
   document.querySelector('.btn-row').after(wrap);
   document.getElementById('csv-output').value = csv;
 }
