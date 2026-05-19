@@ -209,23 +209,25 @@ function render() {
 
 function exportLog() {
   if (!entries.length) { alert('No entries to export.'); return; }
+  let wrap = document.getElementById('csv-wrap');
+  if (wrap) { wrap.remove(); return; }
   const header = 'Date,Time,Sound,Activity,Movement,Notes\n';
   const rows = entries.map(e =>
     [e.date, e.time, e.sound, `"${e.activity}"`, e.movement, `"${e.notes}"`].join(',')
   ).join('\n');
   const csv = header + rows;
-  let box = document.getElementById('csv-output');
-  if (!box) {
-    const wrap = document.createElement('div');
-    wrap.style.cssText = 'margin-top:1rem;';
-    wrap.innerHTML = `
-      <div class="section-label" style="margin-bottom:8px;">CSV output — select all &amp; copy</div>
-      <textarea id="csv-output" style="width:100%;min-height:140px;font-size:11px;background:var(--surface2);color:var(--text);border:0.5px solid var(--border2);border-radius:var(--radius);padding:10px;font-family:'Courier New',monospace;resize:vertical;" readonly></textarea>`;
-    document.querySelector('.btn-row').after(wrap);
-    box = document.getElementById('csv-output');
-  }
-  box.value = csv;
-  box.select();
+  wrap = document.createElement('div');
+  wrap.id = 'csv-wrap';
+  wrap.style.cssText = 'margin-top:1rem;';
+  wrap.innerHTML = `
+    <div class="section-label" style="margin-bottom:8px;">CSV output</div>
+    <textarea id="csv-output" style="width:100%;min-height:140px;font-size:11px;background:var(--surface2);color:var(--text);border:0.5px solid var(--border2);border-radius:var(--radius);padding:10px;font-family:'Courier New',monospace;resize:vertical;" readonly></textarea>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button onclick="document.getElementById('csv-output').select()">Select All</button>
+      <button onclick="navigator.clipboard.writeText(document.getElementById('csv-output').value).then(()=>this.textContent='Copied!').catch(()=>this.textContent='Failed')">Copy</button>
+    </div>`;
+  document.querySelector('.btn-row').after(wrap);
+  document.getElementById('csv-output').value = csv;
 }
 
 render();
